@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import { signInWithGooglePopup } from "../utils/firebase/firebase.utils.js";
+import { login, logout } from "../store/loginSlice.js";
+import { useDispatch } from "react-redux";
+import { UserCredential } from "firebase/auth";
+import { useSelector } from "react-redux";
 
 const Header = (props: any) => {
+  const dispatch = useDispatch();
+  const loggedInUser = useSelector((state: any) => state.login);
+
+  const logGoogleUser = async () => {
+    const response: UserCredential = await signInWithGooglePopup();
+    let user = response.user;
+
+    dispatch(login(JSON.stringify(user)));
+    // await createUserDocumentFromAuth(response.user);
+  };
+
   const navItemsList: Array<any> = [
     { name: "Home", icon: "/images/home-icon.svg", link: "/home" },
     { name: "Search", icon: "/images/search-icon.svg", link: "/search" },
@@ -21,15 +37,22 @@ const Header = (props: any) => {
         <Logo>
           <img src="/images/logo.svg" alt="" />
         </Logo>
-        <NavMenu>
-          {navItemsList.map((el) => (
-            <NavItem href={el.link}>
-              <img src={el.icon} alt="" />
-              <span>{el.name}</span>
-            </NavItem>
-          ))}
-        </NavMenu>
-        <Login>Login</Login>
+        {loggedInUser.currentUser != null && (
+          <NavMenu>
+            {navItemsList.map((el) => (
+              <NavItem key={el.name} href={el.link}>
+                <img src={el.icon} alt="" />
+                <span>{el.name}</span>
+              </NavItem>
+            ))}
+          </NavMenu>
+        )}
+
+        {loggedInUser.currentUser != null ? (
+          <Login onClick={() => dispatch(logout())}>Logout</Login>
+        ) : (
+          <Login onClick={logGoogleUser}>Login</Login>
+        )}
       </Nav>
       <Outlet />
     </div>
