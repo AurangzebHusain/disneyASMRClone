@@ -4,12 +4,16 @@ import styled from "styled-components";
 
 const Header = (props: any) => {
   const navItemsList: Array<any> = [
-    { name: "Home", icon: "/images/home-icon.svg" },
-    { name: "Search", icon: "/images/search-icon.svg" },
-    { name: "WatchList", icon: "/images/watchlist-icon.svg" },
-    { name: "Originals", icon: "/images/original-icon.svg" },
-    { name: "Movies", icon: "/images/movie-icon.svg" },
-    { name: "Series", icon: "/images/series-icon.svg" },
+    { name: "Home", icon: "/images/home-icon.svg", link: "/home" },
+    { name: "Search", icon: "/images/search-icon.svg", link: "/search" },
+    {
+      name: "WatchList",
+      icon: "/images/watchlist-icon.svg",
+      link: "/watchlist",
+    },
+    { name: "Originals", icon: "/images/original-icon.svg", link: "/original" },
+    { name: "Movies", icon: "/images/movie-icon.svg", link: "/movies" },
+    { name: "Series", icon: "/images/series-icon.svg", link: "/series" },
   ];
   return (
     <div>
@@ -21,7 +25,7 @@ const Header = (props: any) => {
           {navItemsList.map((el) => (
             <NavItem href={el.link}>
               <img src={el.icon} alt="" />
-              {el.name}
+              <span>{el.name}</span>
             </NavItem>
           ))}
         </NavMenu>
@@ -51,6 +55,9 @@ const NavItem = styled.a`
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  &:hover {
+    border-bottom: 1px solid white;
+  }
 `;
 const Logo = styled.a`
   width: 100px;
@@ -63,7 +70,7 @@ const Nav = styled.nav`
   width: 100%;
   background-color: black;
   display: flex;
-  /* letter-spacing: 1rem; */
+  letter-spacing: 0.2rem;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
