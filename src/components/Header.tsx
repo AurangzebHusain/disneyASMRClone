@@ -29,16 +29,33 @@ const Header = (props: any) => {
             </NavItem>
           ))}
         </NavMenu>
+        <Login>Login</Login>
       </Nav>
       <Outlet />
     </div>
   );
 };
 
+const Login = styled.a`
+  margin-left: auto;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  transition: all 500ms;
+
+  &:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+  }
+`;
 const NavMenu = styled.div`
   display: flex;
   flex-direction: row;
   width: calc(100vw-40vw);
+  vertical-align: middle;
 
   flex-wrap: nowrap;
   gap: 1.2rem;
@@ -62,8 +79,11 @@ const NavItem = styled.a`
 `;
 const Logo = styled.a`
   width: 100px;
+  max-width: 100px;
+  min-width: 100px;
   margin-top: 4px;
   max-height: 70px;
+  vertical-align: middle;
 `;
 const Nav = styled.nav`
   position: fixed;
@@ -72,7 +92,8 @@ const Nav = styled.nav`
   background-color: black;
   display: flex;
   letter-spacing: 0.2rem;
-  justify-content: space-between;
+  gap: 1rem;
+  /* justify-content: space-between; */
   align-items: center;
   padding: 1.5rem 1rem;
 `;
