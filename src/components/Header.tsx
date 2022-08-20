@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { UserCredential } from "firebase/auth";
 import { useSelector } from "react-redux";
 
+const NavMenuComponent = React.lazy(() => import("./NavMenu.js"));
 const Header = (props: any) => {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state: any) => state.login);
@@ -37,16 +38,11 @@ const Header = (props: any) => {
         <Logo>
           <img src="/images/logo.svg" alt="" />
         </Logo>
-        {loggedInUser.currentUser != null && (
-          <NavMenu>
-            {navItemsList.map((el) => (
-              <NavItem key={el.name} href={el.link}>
-                <img src={el.icon} alt="" />
-                <span>{el.name}</span>
-              </NavItem>
-            ))}
-          </NavMenu>
-        )}
+        <React.Suspense fallback={<div>Loading NavMenu</div>}>
+          {loggedInUser.currentUser != null && (
+            <NavMenuComponent navItemsList={navItemsList} />
+          )}
+        </React.Suspense>
 
         {loggedInUser.currentUser != null ? (
           <Login onClick={() => dispatch(logout())}>Logout</Login>
@@ -74,32 +70,7 @@ const Login = styled.a`
     cursor: pointer;
   }
 `;
-const NavMenu = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: calc(100vw-40vw);
-  vertical-align: middle;
 
-  flex-wrap: nowrap;
-  gap: 1.2rem;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-const NavItem = styled.a`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  img {
-    width: 2rem;
-    min-width: 1.5rem;
-  }
-  &:hover {
-    border-bottom: 1px solid white;
-  }
-`;
 const Logo = styled.a`
   width: 100px;
   max-width: 100px;
