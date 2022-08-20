@@ -43,9 +43,6 @@ const NavMenu = styled.div`
   flex-wrap: nowrap;
   gap: 1.2rem;
 
-  img {
-    width: 2rem;
-  }
   @media (max-width: 768px) {
     display: none;
   }
@@ -55,6 +52,10 @@ const NavItem = styled.a`
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  img {
+    width: 2rem;
+    min-width: 1.5rem;
+  }
   &:hover {
     border-bottom: 1px solid white;
   }
