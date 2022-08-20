@@ -7,12 +7,19 @@ import { useDispatch } from "react-redux";
 import { UserCredential } from "firebase/auth";
 import { useSelector } from "react-redux";
 
+//Example of lazy loading
 const NavMenuComponent = React.lazy(() => import("./NavMenu.js"));
+
+//Example of eager loading
+function loadNavMenuComponent() {
+  import("./NavMenu.js");
+}
 const Header = (props: any) => {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state: any) => state.login);
 
   const logGoogleUser = async () => {
+    loadNavMenuComponent();
     const response: UserCredential = await signInWithGooglePopup();
     let user = response.user;
 
