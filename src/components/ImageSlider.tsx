@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import sliderImagesData from "../../public/data/sliderImages.json";
 
 const ImageSlider = () => {
   let settings = {
@@ -14,21 +15,19 @@ const ImageSlider = () => {
     autplay: true,
   };
 
-  const sliderImages = [
-    "/public/images/slider-badag.jpg",
-    "/public/images/slider-badging.jpg",
-    "/public/images/slider-scale.jpg",
-    "/public/images/slider-scales.jpg",
-  ];
-
+  const sliderImages: any = sliderImagesData;
   return (
     <div>
-      hello
       <Carousel {...settings}>
-        {sliderImages.map((img) => (
-          <Wrap>
+        {sliderImages.map((slider: any, index: number) => (
+          <Wrap key={index}>
             <a>
-              <img src={img} alt="" />
+              <div>
+                <span className="slider-title">{slider.title}</span>
+                <span className="slider-subtitle">{slider.subtitle}</span>
+                <span className="slider-description">{slider.description}</span>
+              </div>
+              <img src={slider.img} alt="" />
             </a>
           </Wrap>
         ))}
@@ -37,20 +36,51 @@ const ImageSlider = () => {
   );
 };
 export const Wrap = styled.div`
-  height: 100%;
+  height: 60%;
+  width: 100%;
+  a {
+    position: relative;
+    div {
+      display: flex;
+      width: 30%;
+      min-width: 300px;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      position: absolute;
+      gap: 20px;
+      padding: 0 10px;
+      .slider-title {
+        font-size: 3rem;
+        font-weight: 800;
+      }
+      .slider-description,
+      .slider-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+    /* display: flex; */
+  }
+  img {
+    margin-left: auto;
+    width: 70%;
+    height: 100%;
+  }
 `;
 export const Carousel = styled(Slider)`
-  width: 90%;
+  width: 95vw;
   margin: 0 auto;
+  &:hover {
+    button {
+      opacity: 1;
+      transition: opacity 0.2s ease 0s;
+    }
+  }
   & > button {
     opacity: 0;
     width: 5vw;
     height: 100%;
     z-index: 1;
-    &:hover {
-      opacity: 1;
-      transition: opacity 0.2s ease 0s;
-    }
   }
   ul li button {
     &:before {
@@ -62,13 +92,14 @@ export const Carousel = styled(Slider)`
     color: white;
   }
   .slick-list {
-    overflow: initial;
+    /* width: 90% !important; */
+    /* overflow: initial; */
   }
   .slick-prev {
     left: -50px;
   }
   .slick-next {
-    right: -60px;
+    right: -50px;
   }
 `;
 export default ImageSlider;

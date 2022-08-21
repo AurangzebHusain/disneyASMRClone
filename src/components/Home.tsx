@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import ImageSlider from "./ImageSlider";
 
+import PopularShows from "../../public/data/popularShows.json";
+import TrayListComponent from "./TrayList";
+
 const Home = () => {
   return (
     <Container>
       <ImageSlider />
+      <TrayListComponent trayType="Popular Movies" data={PopularShows} />
     </Container>
   );
 };
