@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Header from "./components/Header";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import Home from "./components/Home";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -16,8 +17,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Routes>
           <Route path="/" element={<Header />}>
             <Route index element={<Login />} />
+            <Route path="/home" element={<Home />}></Route>
           </Route>
-          <Route path="/a" element={<App />}></Route>
         </Routes>
       </Router>
     </Provider>

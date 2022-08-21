@@ -8,10 +8,7 @@ import {
   createUserDocumentFromAuth,
 } from "../utils/firebase/firebase.utils.js";
 const initialState: { currentUser?: User | null } = {
-  currentUser:
-    window.localStorage.getItem("User") != null
-      ? JSON.parse(window.localStorage.getItem("User") ?? "")
-      : null,
+  currentUser: null,
 };
 
 const loginSlice = createSlice({
@@ -20,7 +17,7 @@ const loginSlice = createSlice({
   reducers: {
     login(state, action) {
       if (action.payload) {
-        window.localStorage.setItem("User", action.payload);
+        // window.localStorage.setItem("User", action.payload);
         createUserDocumentFromAuth(JSON.parse(action.payload));
         state.currentUser = {
           ...state.currentUser,
@@ -30,7 +27,7 @@ const loginSlice = createSlice({
       }
     },
     logout(state) {
-      window.localStorage.removeItem("User");
+      //   window.localStorage.removeItem("User");
       signOutUser();
 
       state.currentUser = null;
